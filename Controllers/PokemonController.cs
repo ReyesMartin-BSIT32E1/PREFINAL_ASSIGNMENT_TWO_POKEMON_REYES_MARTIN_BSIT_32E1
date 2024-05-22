@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
-using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using PREFINAL_ASSIGNMENT_TWO_POKEMON_REYES_MARTIN_BSIT_32E1.Models;
-using System.Runtime.InteropServices;
 
 
 namespace PREFINAL_ASSIGNMENT_TWO_POKEMON_REYES_MARTIN_BSIT_32E1.Controllers
@@ -31,14 +28,22 @@ namespace PREFINAL_ASSIGNMENT_TWO_POKEMON_REYES_MARTIN_BSIT_32E1.Controllers
             public string Url { get; set; }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 20)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("https://pokeapi.co/api/v2/pokemon");
+            // Calculate the offset based on page number and page size
+            int offset = (page - 1) * pageSize;
+
+            HttpResponseMessage response = await _httpClient.GetAsync($"https://pokeapi.co/api/v2/pokemon?offset={offset}&limit={pageSize}");
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
                 var apiResponse = JsonConvert.DeserializeObject<PokeApiResponse>(content);
                 var pokemonList = apiResponse.Results.Select(p => new Pokemon { Name = p.Name }).ToList();
+
+                // Pass additional data to the view for pagination
+                ViewData["Page"] = page;
+                ViewData["PageSize"] = pageSize;
+                ViewData["TotalCount"] = apiResponse.Count;
                 return View(pokemonList);
             }
             return View("Error");
