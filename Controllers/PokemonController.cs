@@ -14,14 +14,28 @@ namespace PREFINAL_ASSIGNMENT_TWO_POKEMON_REYES_MARTIN_BSIT_32E1.Controllers
             _httpClient = httpClient;
         }
 
+        public class PokeApiResponse
+        {
+            public int Count { get; set; }
+            public string Next { get; set; }
+            public string Previous { get; set; }
+            public List<PokemonDetail> Results { get; set; }
+        }
+
+        public class PokemonDetail
+        {
+            public string Name { get; set; }
+            public string Url { get; set; }
+        }
+
         public async Task<IActionResult> Index()
         {
-            // Fetch Pokemon data from PokéAPI
             HttpResponseMessage response = await _httpClient.GetAsync("https://pokeapi.co/api/v2/pokemon");
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
-                var pokemonList = JsonConvert.DeserializeObject<List<Pokemon>>(content);
+                var apiResponse = JsonConvert.DeserializeObject<PokeApiResponse>(content);
+                var pokemonList = apiResponse.Results.Select(p => new Pokemon { Name = p.Name }).ToList();
                 return View(pokemonList);
             }
             return View("Error");
