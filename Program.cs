@@ -1,8 +1,13 @@
+using PREFINAL_ASSIGNMENT_TWO_POKEMON_REYES_MARTIN_BSIT_32E1.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddHttpClient<PokemonController>(client =>
+{
+    client.BaseAddress = new Uri("https://pokeapi.co/api/v2/pokemon");
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
