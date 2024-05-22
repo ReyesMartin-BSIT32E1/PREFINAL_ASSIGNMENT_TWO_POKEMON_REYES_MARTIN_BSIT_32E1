@@ -1,0 +1,10 @@
+﻿@model List<PREFINAL_ASSIGNMENT_TWO_POKEMON_REYES_MARTIN_BSIT_32E1.Models.Pokemon>
+
+<h1>Pokémon List</h1>
+
+<ul>
+    @foreach (var pokemon in Model)
+    {
+            <li><a asp-controller="Pokemon" asp-action="Details" asp-route-name="@pokemon.Name">@pokemon.Name</a></li>
+    }
+</ul>
