@@ -6,7 +6,7 @@
 <ul>
     @foreach (var move in Model.Moves)
     {
-        <li>@move</li>
+        <li>@move.Move.Name</li>
     }
 </ul>
 
@@ -14,6 +14,6 @@
 <ul>
     @foreach (var ability in Model.Abilities)
     {
-        <li>@ability</li>
+        <li>@ability.Ability.Name</li>
     }
 </ul>
