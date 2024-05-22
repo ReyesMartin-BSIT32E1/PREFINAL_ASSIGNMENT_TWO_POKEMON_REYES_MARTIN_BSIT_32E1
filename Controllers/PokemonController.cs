@@ -39,7 +39,6 @@ namespace PREFINAL_ASSIGNMENT_TWO_POKEMON_REYES_MARTIN_BSIT_32E1.Controllers
                 string content = await response.Content.ReadAsStringAsync();
                 var apiResponse = JsonConvert.DeserializeObject<PokeApiResponse>(content);
                 var pokemonList = apiResponse.Results.Select(p => new Pokemon { Name = p.Name }).ToList();
-
                 // Pass additional data to the view for pagination
                 ViewData["Page"] = page;
                 ViewData["PageSize"] = pageSize;

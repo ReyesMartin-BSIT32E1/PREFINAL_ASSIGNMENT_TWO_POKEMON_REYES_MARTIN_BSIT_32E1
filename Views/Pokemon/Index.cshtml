@@ -25,9 +25,19 @@
         <a asp-action="Index" asp-route-page="1" asp-route-pageSize="@pageSize">First</a>
         <a asp-action="Index" asp-route-page="@(page - 1)" asp-route-pageSize="@pageSize">Previous</a>
     }
+    @if (page == 1)
+    {
+        <a>First</a>
+        <a>Previous</a>
+    }
     @if (page < totalPages)
     {
         <a asp-action="Index" asp-route-page="@(page + 1)" asp-route-pageSize="@pageSize">Next</a>
         <a asp-action="Index" asp-route-page="@totalPages" asp-route-pageSize="@pageSize">Last</a>
+    }
+    @if (page == totalPages)
+    {
+        <a>Next</a>
+        <a>Last</a>
     }
 </div>
