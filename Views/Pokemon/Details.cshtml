@@ -1,0 +1,19 @@
+﻿@model PREFINAL_ASSIGNMENT_TWO_POKEMON_REYES_MARTIN_BSIT_32E1.Models.Pokemon
+
+<h1>@Model.Name</h1>
+
+<h2>Moves</h2>
+<ul>
+    @foreach (var move in Model.Moves)
+    {
+        <li>@move</li>
+    }
+</ul>
+
+<h2>Abilities</h2>
+<ul>
+    @foreach (var ability in Model.Abilities)
+    {
+        <li>@ability</li>
+    }
+</ul>
